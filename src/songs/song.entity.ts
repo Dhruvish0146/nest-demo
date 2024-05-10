@@ -1,6 +1,7 @@
 // song.entity.ts
 import { Artist } from "src/artists/artist.entity";
-import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn} from "typeorm";
+import { PlayList } from "src/playlist/playlist.entity";
+import { Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
 
 @Entity("songs")
 export class Song {
@@ -21,8 +22,11 @@ export class Song {
     @Column({ type: "time" })
     duration: Date;
 
-    @Column({ type: "text" })
+    @Column()
     lyrics: string;
+
+    @ManyToOne(()=>PlayList, (playlist)=>playlist.songs)
+    playList:PlayList;
 
 }
 

@@ -13,6 +13,8 @@ import { UsersModule } from './users/users.module';
 import { User } from './users/user.entity';
 import { Artist } from './artists/artist.entity';
 import { AuthModule } from './auth/auth.module';
+import { PlaylistModule } from './playlist/playlist.module';
+import { PlayList } from './playlist/playlist.entity';
 
 
 @Module({
@@ -25,13 +27,14 @@ import { AuthModule } from './auth/auth.module';
       username:'root',
       password:'rootpassword',
       database:'test',
-      entities:[Song,User,Artist],
+      entities:[Song,User,Artist,PlayList],
       synchronize:true
     }),
     UsersModule,
     AuthModule,
     UsersModule,
     AuthModule,
+    PlaylistModule,
   ],
   controllers: [AppController],
   providers: [
