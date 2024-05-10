@@ -4,12 +4,15 @@ import { Song } from './song.entity';
 import { Repository, UpdateResult } from 'typeorm';
 import { CreateSongDto } from './dto/create-song-dto';
 import { UpdateSongDto } from './dto/update-song-dto';
+import { Artist } from 'src/artists/artist.entity';
 
 @Injectable({ scope: Scope.TRANSIENT })
 export class SongsService {
   constructor(
     @InjectRepository(Song)
     private songRepository: Repository<Song>,
+    @InjectRepository(Artist)
+    private artistRepository:Repository<Artist>,
   ) {}
 
   // private readonly songs=[];
@@ -17,10 +20,13 @@ export class SongsService {
   async create(songDTO: CreateSongDto): Promise<Song> {
     const song = new Song();
     song.title = songDTO.title;
-    song.artist = songDTO.artist;
+    song.artists = songDTO.artists;
     song.duration = songDTO.duration;
     song.lyrics = songDTO.lyrics;
     song.releasedDate = songDTO.releasedDate;
+
+    const artists=await this.artistRepository.findByIds(songDTO.artists);
+    song.artists=artists;
 
     return await this.songRepository.save(song);
   }

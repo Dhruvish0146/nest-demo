@@ -1,5 +1,5 @@
 // createSongDto.ts
-import { IsArray, IsDateString, IsNotEmpty, IsOptional, IsString } from "class-validator";
+import { IsArray, IsDateString, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
 
 export class CreateSongDto {
 
@@ -8,9 +8,10 @@ export class CreateSongDto {
     readonly title: string;
 
     @IsArray()
-    @IsString({ each: true })
+    // @IsString({ each: true })
+    @IsNumber({},{each:true})
     @IsNotEmpty()
-    readonly artist;
+    readonly artists;
 
     // @IsDate()
     @IsDateString()
