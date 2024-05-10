@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './user.entity';
 import { Repository } from 'typeorm';
@@ -17,6 +17,14 @@ export class UsersService {
         createUser.password=await bcrypt.hash(createUser.password,saltOrRound);
         const user =await this.userRepository.save(createUser);
         delete user.password;
+        return user;
+    }
+
+    async FindByEmail(data:Partial<User>) : Promise<User>{
+        const user = this.userRepository.findOneBy({email:data.email});
+        if(!user){
+            throw new UnauthorizedException('Could not found user');
+        }
         return user;
     }
 }
