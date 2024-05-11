@@ -22,7 +22,7 @@ export class AuthController {
     @Post("login")
     login(
         @Body()logInDto:LoginDTO
-    ) : Promise<User>{
+    ) : Promise<{accessToken:string}>{
         return this.authService.login(logInDto);
     }
 
